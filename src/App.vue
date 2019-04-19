@@ -1,5 +1,5 @@
 <template>
-  <div class="container" :style="{'--r': this.r,'--g': this.g,'--b': this.b}">
+  <div class="container" :style="{'--r': this.r,'--g': this.g,'--b': this.b, '--a':this.a}">
     <input @input="colorMash($event)" class="thebox" type="text">
   </div>
 </template>
@@ -11,11 +11,17 @@ export default {
       r: 50,
       g: 146,
       b: 100,
-      timeSinceLastKey: 0
+      currentTimeSinceLastKey: 0,
+      minTSL: 0,
+      maxTSL: 0,
+      a: 0
     };
   },
   methods: {
     colorMash($event) {}
+  },
+  alpha(currentTSL, minTSL, maxTSL) {
+    this.alphaValue = (currentTSL - minTSL) / (maxTSL - minTSL);
   }
 };
 </script>
@@ -30,6 +36,7 @@ body {
   --r: 200;
   --g: 152;
   --b: 18;
+  --a: 0;
 
   display: flex;
   align-items: center;
