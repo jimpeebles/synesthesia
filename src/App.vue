@@ -1,6 +1,6 @@
 <template>
   <div class="container" :style="{'--r': this.r,'--g': this.g,'--b': this.b, '--a':this.a}">
-    <input @input="colorMash($event)" v-model="txtin" class="thebox" type="text">
+    <input @keyup="colorMash($event)" :value="txtin" class="thebox" type="text" autofocus>
   </div>
 </template>
 
@@ -21,15 +21,12 @@ export default {
   },
   methods: {
     colorMash(event) {
-      let keycode = this.txtin.charCodeAt(0);
-      this.txtin = event.target.value.charAt(0);
+      this.txtin = "";
+      let keycode = event.keyCode;
       let normalized = this.normalize(keycode, 0, 177);
       let rgbval = normalized * 255;
       this.buffer.push(rgbval);
-      // this.buffer[0] = this.buffer[1];
-      // this.buffer[1] = this.buffer[2];
-      // this.buffer[2] = normalized * 255;
-      console.log(this.buffer.shift());
+      this.buffer.shift();
       this.r = this.buffer[0];
       this.g = this.buffer[1];
       this.b = this.buffer[2];
@@ -66,7 +63,10 @@ body {
 }
 .thebox {
   background-color: rgba(0, 0, 0, 0);
-  font-size: 10vw;
+  font-family: Poppins, Arial, Helvetica, sans-serif;
+  font-size: 80vh;
+  font-weight: 700;
+  color: #fff;
   outline: none;
   box-shadow: none;
   border: none;
