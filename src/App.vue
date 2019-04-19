@@ -21,16 +21,27 @@ export default {
   },
   methods: {
     colorMash(event) {
+      // Clear input box
       this.txtin = "";
+
+      // Get keycode for input event
       let keycode = event.keyCode;
+
+      // Normalize keycode (range: 0-177) to RGB value (0-255)
       let normalized = this.normalize(keycode, 0, 177);
       let rgbval = normalized * 255;
+
+      // Add value to buffer and remove first item to keep only last 3 values
       this.buffer.push(rgbval);
       this.buffer.shift();
+
+      // Set RGB values based on buffer contents
       this.r = this.buffer[0];
       this.g = this.buffer[1];
       this.b = this.buffer[2];
     },
+
+    // Function to normalize value within a given range
     normalize(val, min, max) {
       return (val - min) / (max - min);
     }
